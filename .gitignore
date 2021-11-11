@@ -1,0 +1,19 @@
+.*
+!.gitignore
+!.editorconfig
+
+# C/C++ files
+*.o
+*.out
+
+# CLang files
+!.clang-format
+
+# VSCode files
+!.vscode/
+
+# VSCode Makefile tool files
+*.log
+
+# Build target
+cmm
