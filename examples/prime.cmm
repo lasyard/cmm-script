@@ -5,14 +5,15 @@ n ?: n = 100 $
 num = @
 
 cn = 2 {
-	{ num[cn] != 0 ?:#$ ++cn }
-	i = cn*2 { i < n ?:#$
-		num[i] = 1
-		i += cn
-	}
+    { num[cn] != 0 ?:#$ ++cn }
+    i = cn*2 { i < n ?:#$
+        num[i] = 1
+        i += cn
+    }
 ++cn; cn < n/2 ?:#$ }
 
 _p("Prime numbers within ", n, ":"); _pln()
 i = 2 { i < n ?:#$
-	num[i] == 0 ? _p(i) $
-++i } _pln()
+    num[i] == 0 ? _p(i) $
+++i }
+_pln()
