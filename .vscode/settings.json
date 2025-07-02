@@ -38,5 +38,6 @@
       "initializer_list": "cpp",
       "stack": "cpp",
       "unordered_map": "cpp"
-    }
+    },
+    "makefile.configureOnOpen": true
 }
