@@ -96,3 +96,7 @@ In the command line interface, you can type in any codes, which are executed whe
 * `funs`: to show all the functions
 * `run filename`: to look for a file named `filename.cmm`, read it in and execute it
 * `exit`: exit the program
+
+## MIT License
+
+<http://lasy.great-site.net/mit_license>.
