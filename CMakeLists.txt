@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 3.21.0)
 project(cmm-script VERSION 1.0.0 LANGUAGES C CXX)
-set(LIB_NAME cmm-script)
-set(CLI_NAME cmm)
 
-add_library(${LIB_NAME} STATIC)
-target_compile_features(${LIB_NAME} PUBLIC cxx_std_20)
-target_compile_options(${LIB_NAME} PUBLIC -Werror -Wall -Wextra)
-target_sources(${LIB_NAME} PRIVATE
+include(cmake-common/functions.cmake)
+
+# Determine if cmm-script is built as a subproject (using add_subdirectory) or if it is the main project.
+set(MAIN_PROJECT OFF)
+if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    set(MAIN_PROJECT ON)
+endif()
+
+add_lib(cmm
     data.cpp
     expression.cpp
     funs.cpp
@@ -14,7 +17,8 @@ target_sources(${LIB_NAME} PRIVATE
     script.cpp
 )
 
-add_executable(${CLI_NAME} cmm.cpp)
-target_compile_features(${CLI_NAME} PUBLIC cxx_std_20)
-target_compile_options(${CLI_NAME} PUBLIC -Werror -Wall -Wextra)
-target_link_libraries(${CLI_NAME} PRIVATE ${LIB_NAME})
+if(MAIN_PROJECT)
+    add_executable(cmms cmm.cpp)
+    target_link_libraries(cmms PRIVATE cmm)
+    using_doctest(doctest)
+endif()
