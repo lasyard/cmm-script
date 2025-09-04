@@ -1,4 +1,5 @@
 #include "operand.h"
+
 #include "error.h"
 
 Operand::Operand() : type(NO), pData(0)
@@ -23,12 +24,12 @@ Operand::~Operand()
     release();
 }
 
-Operand::operator int()
+Operand::operator int() const
 {
     return int(*pData);
 }
 
-Operand::operator const Data &()
+Operand::operator const Data &() const
 {
     return (const Data &)(*pData);
 }
@@ -92,8 +93,9 @@ void Operand::copy(const Operand &obj)
 
 void Operand::release()
 {
-    if (type == RV)
+    if (type == RV) {
         delete pData;
+    }
 }
 
 ostream &operator<<(ostream &os, const Operand &obj)

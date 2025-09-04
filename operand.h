@@ -14,8 +14,8 @@ public:
     Operand(Data *d);
     virtual ~Operand();
 
-    operator int();
-    operator const Data &();
+    operator int() const;
+    operator const Data &() const;
     const Operand &operator=(const Operand &obj);
     const Operand &operator=(const Data &d);
     const Operand &operator=(Data *d);

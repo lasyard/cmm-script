@@ -1,5 +1,5 @@
-#ifndef _SCRIPT_H_
-#define _SCRIPT_H_
+#ifndef _HA_CMM_SCRIPT_SCRIPT_H_
+#define _HA_CMM_SCRIPT_SCRIPT_H_
 
 #include "error.h"
 #include "expression.h"
@@ -108,4 +108,4 @@ private:
     void addFuns();
 };
 
-#endif
+#endif /* _HA_CMM_SCRIPT_SCRIPT_H_ */

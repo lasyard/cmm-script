@@ -9,7 +9,7 @@ using namespace std;
 
 class Script;
 
-typedef void FunType(Script *sc, Operand &r, deque<Operand> &p);
+typedef void FunType([[maybe_unused]] Script *sc, Operand &r, deque<Operand> &p);
 
 void f__p(Script *sc, Operand &r, deque<Operand> &p);
 void f__pw(Script *sc, Operand &r, deque<Operand> &p);
