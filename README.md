@@ -1,5 +1,7 @@
 # C-- Script
 
+[![CMake](https://github.com/lasyard/cmm-script/actions/workflows/cmake.yml/badge.svg)](https://github.com/lasyard/cmm-script/actions/workflows/cmake.yml)
+
 C-- Script is a simple script language.
 
 ## Comments
