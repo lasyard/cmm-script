@@ -1,5 +1,5 @@
-#ifndef _ERROR_H_
-#define _ERROR_H_
+#ifndef _CMM_ERROR_H_
+#define _CMM_ERROR_H_
 
 const char *const ERR_UNDEF = "Undefined var";
 const char *const ERR_NOT_INT = "Var is not an integer";
@@ -26,4 +26,4 @@ const char *const ERR_NOTE_NOT_END = "Note is not ended";
 const char *const ERR_NOT_LV = "L-value required";
 const char *const ERR_BAD_INDEX = "Index must be an integer or a string";
 
-#endif
+#endif /* _CMM_ERROR_H_ */

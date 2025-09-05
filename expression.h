@@ -1,8 +1,9 @@
-#ifndef _EXPRESSION_H_
-#define _EXPRESSION_H_
+#ifndef _CMM_EXPRESSION_H_
+#define _CMM_EXPRESSION_H_
 
 #include <stack>
 
+#include "error.h"
 #include "funs.h"
 
 enum OpCode {
@@ -54,21 +55,45 @@ enum OpCode {
     END
 };
 
-class Script;
-
 class Expression
 {
 public:
-    Expression();
-    virtual ~Expression();
+    Expression()
+    {
+    }
 
-    void bind(Script *sc);
+    virtual ~Expression()
+    {
+    }
+
+    void bind(void *context)
+    {
+        m_context = context;
+    }
+
+    void push(const Operand &o)
+    {
+        nStack.push(o);
+    }
+
+    const Operand &value() const
+    {
+        return nStack.top();
+    }
+
+    bool empty() const
+    {
+        return nStack.empty() && oStack.empty();
+    }
+
+    void pushFun(FunType *f)
+    {
+        oStack.push(FUN);
+        fStack.push(f);
+    }
+
     void clear();
-    void push(const Operand &o);
     void pushOp(enum OpCode op);
-    void pushFun(FunType *f);
-    const Operand &value();
-    bool empty() const;
 
 private:
     enum OpDir { L2R, R2L };
@@ -82,13 +107,19 @@ private:
 
     static const struct OpInfo ops[];
 
-    Script *m_script;
+    void *m_context;
 
     stack<enum OpCode> oStack;
     stack<Operand> nStack;
     stack<FunType *> fStack;
 
-    void checkOperandsNum(enum OpCode op);
+    void checkOperandsNum(enum OpCode op)
+    {
+        if (nStack.size() < (stack<Operand>::size_type)ops[op].operandsNum) {
+            throw ERR_LACK_OPEE;
+        }
+    }
+
     void popOp();
     void popFun(bool has_para = false);
 
@@ -137,4 +168,4 @@ private:
     void do_lbrk();
 };
 
-#endif
+#endif /* _CMM_EXPRESSION_H_ */

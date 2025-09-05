@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void f__p([[maybe_unused]] Script *sc, [[maybe_unused]] Operand &r, deque<Operand> &p)
+void f__p([[maybe_unused]] void *context, [[maybe_unused]] Operand &r, deque<Operand> &p)
 {
     deque<Operand>::const_iterator i;
     for (i = p.begin(); i != p.end(); ++i) {
@@ -13,7 +13,7 @@ void f__p([[maybe_unused]] Script *sc, [[maybe_unused]] Operand &r, deque<Operan
     }
 }
 
-void f__pw([[maybe_unused]] Script *sc, [[maybe_unused]] Operand &r, deque<Operand> &p)
+void f__pw([[maybe_unused]] void *context, [[maybe_unused]] Operand &r, deque<Operand> &p)
 {
     deque<Operand>::const_iterator i;
     int w = p.front();
@@ -23,7 +23,7 @@ void f__pw([[maybe_unused]] Script *sc, [[maybe_unused]] Operand &r, deque<Opera
     }
 }
 
-void f__pln([[maybe_unused]] Script *sc, [[maybe_unused]] Operand &r, [[maybe_unused]] deque<Operand> &p)
+void f__pln([[maybe_unused]] void *context, [[maybe_unused]] Operand &r, [[maybe_unused]] deque<Operand> &p)
 {
     cout << endl;
 }

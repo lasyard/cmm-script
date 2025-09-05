@@ -137,12 +137,6 @@ void Script::exec(const char *src)
     }
 }
 
-void Script::reset()
-{
-    clear();
-    clearIds();
-}
-
 void Script::printIds()
 {
     cout << ids << endl;
@@ -169,7 +163,13 @@ void Script::clear()
 void Script::clearIds()
 {
     ids.newMap();
-    addSpecialVars();
+    string var;
+    var = "@";
+    ids[var] = Data();
+    ids[var].newVec();
+    var = "\\";
+    ids[var] = Data();
+    ids[var].newMap();
 }
 
 int Script::parseHexInt()
@@ -481,17 +481,6 @@ void Script::exitLoop()
         throw ERR_BAD_LOOP;
     }
     pc++;
-}
-
-void Script::addSpecialVars()
-{
-    string var;
-    var = "@";
-    ids[var] = Data();
-    ids[var].newVec();
-    var = "\\";
-    ids[var] = Data();
-    ids[var].newMap();
 }
 
 void Script::addFuns()

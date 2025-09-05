@@ -1,5 +1,5 @@
-#ifndef _FUNS_H_
-#define _FUNS_H_
+#ifndef _CMM_FUNS_H_
+#define _CMM_FUNS_H_
 
 #include <deque>
 
@@ -7,12 +7,14 @@
 
 using namespace std;
 
-class Script;
+typedef void FunType(
+    void *context,
+    Operand &r,       // return value
+    deque<Operand> &p // parameters
+);
 
-typedef void FunType([[maybe_unused]] Script *sc, Operand &r, deque<Operand> &p);
+void f__p(void *context, Operand &r, deque<Operand> &p);
+void f__pw(void *context, Operand &r, deque<Operand> &p);
+void f__pln(void *context, Operand &r, deque<Operand> &p);
 
-void f__p(Script *sc, Operand &r, deque<Operand> &p);
-void f__pw(Script *sc, Operand &r, deque<Operand> &p);
-void f__pln(Script *sc, Operand &r, deque<Operand> &p);
-
-#endif
+#endif /* _CMM_FUNS_H_ */

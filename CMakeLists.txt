@@ -13,12 +13,20 @@ add_lib(cmm
     data.cpp
     expression.cpp
     funs.cpp
-    operand.cpp
     script.cpp
 )
 
 if(MAIN_PROJECT)
     add_executable(cmms cmm.cpp)
     target_link_libraries(cmms PRIVATE cmm)
+
     using_doctest(doctest)
+    enable_testing()
+
+    add_test(test_expression test_expression.cpp test.cpp)
+    target_link_libraries(test_expression PRIVATE cmm)
+
+    set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+    set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+    include(CPack)
 endif()

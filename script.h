@@ -1,7 +1,6 @@
-#ifndef _HA_CMM_SCRIPT_SCRIPT_H_
-#define _HA_CMM_SCRIPT_SCRIPT_H_
+#ifndef _CMM_SCRIPT_H_
+#define _CMM_SCRIPT_H_
 
-#include "error.h"
 #include "expression.h"
 
 class Script
@@ -10,8 +9,18 @@ public:
     Script();
     virtual ~Script();
 
+    void reset()
+    {
+        clear();
+        clearIds();
+    }
+
+    const Data &getVar(const string &name) const
+    {
+        return ids[name];
+    }
+
     void exec(const char *src);
-    void reset();
     void printIds();
     void printFuns();
 
@@ -104,8 +113,7 @@ private:
 
     void bypassBranch();
     void exitLoop();
-    void addSpecialVars();
     void addFuns();
 };
 
-#endif /* _HA_CMM_SCRIPT_SCRIPT_H_ */
+#endif /* _CMM_SCRIPT_H_ */

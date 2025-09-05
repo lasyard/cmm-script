@@ -1,7 +1,5 @@
 #include "expression.h"
 
-#include "error.h"
-
 const struct Expression::OpInfo Expression::ops[] = {
     {  0, 0, L2R,                      0},
     {  1, 1, R2L,    &Expression::op_inc},
@@ -51,20 +49,6 @@ const struct Expression::OpInfo Expression::ops[] = {
     {100, 0, R2L,                      0}, // END
 };
 
-Expression::Expression()
-{
-    clear();
-}
-
-Expression::~Expression()
-{
-}
-
-void Expression::bind(Script *sc)
-{
-    m_script = sc;
-}
-
 void Expression::clear()
 {
     while (!oStack.empty()) {
@@ -76,11 +60,6 @@ void Expression::clear()
     while (!fStack.empty()) {
         fStack.pop();
     }
-}
-
-void Expression::push(const Operand &o)
-{
-    nStack.push(o);
 }
 
 void Expression::pushOp(enum OpCode op)
@@ -116,29 +95,6 @@ void Expression::pushOp(enum OpCode op)
     }
 }
 
-void Expression::pushFun(FunType *f)
-{
-    oStack.push(FUN);
-    fStack.push(f);
-}
-
-const Operand &Expression::value()
-{
-    return nStack.top();
-}
-
-bool Expression::empty() const
-{
-    return nStack.empty() && oStack.empty();
-}
-
-void Expression::checkOperandsNum(enum OpCode op)
-{
-    if (nStack.size() < (stack<Operand>::size_type)ops[op].operandsNum) {
-        throw ERR_LACK_OPEE;
-    }
-}
-
 void Expression::popOp()
 {
     Operand i;
@@ -169,7 +125,7 @@ void Expression::popFun(bool has_para)
         p.push_front(nStack.top());
         nStack.pop();
     }
-    f(m_script, r, p);
+    f(m_context, r, p);
     nStack.push(r);
     oStack.pop();
     fStack.pop();
