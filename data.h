@@ -1,6 +1,7 @@
 #ifndef _CMM_DATA_H_
 #define _CMM_DATA_H_
 
+#include <cstdint>
 #include <iostream>
 #include <map>
 #include <string>
@@ -138,7 +139,7 @@ private:
     enum DataType type;
 
     union {
-        int value;
+        int64_t value;
         string *pStr;
         vector<Data> *pVec;
         map<string, Data> *pMap;

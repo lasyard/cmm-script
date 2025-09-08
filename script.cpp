@@ -140,11 +140,11 @@ int Script::parseHexInt()
     while (true) {
         if (is_digit(pc[0])) {
             value <<= 4;
-            value += pc[0] & 0x0F;
+            value += digit_value(pc[0]);
             ok = true;
         } else if (is_hex(pc[0])) {
             value <<= 4;
-            value += (pc[0] & 0x0F) + 9;
+            value += hex_value(pc[0]);
             ok = true;
         } else {
             break;
@@ -185,7 +185,7 @@ int Script::parseDecInt()
     while (true) {
         if (is_digit(pc[0])) {
             value *= 10;
-            value += pc[0] & 0x0F;
+            value += digit_value(pc[0]);
         } else {
             break;
         }
