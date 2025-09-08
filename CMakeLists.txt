@@ -17,14 +17,18 @@ add_lib(cmm
 )
 
 if(MAIN_PROJECT)
-    add_executable(cmms cmm.cpp)
+    add_executable(cmms cmms.cpp)
     target_link_libraries(cmms PRIVATE cmm)
 
     using_doctest(doctest)
     enable_testing()
 
+    add_test(test_char_utils test_char_utils.cpp test.cpp)
     add_test(test_expression test_expression.cpp test.cpp)
     target_link_libraries(test_expression PRIVATE cmm)
+
+    copy_dir(cp_examples examples)
+    add_dependencies(cmms cp_examples)
 
     set(CPACK_PROJECT_NAME ${PROJECT_NAME})
     set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

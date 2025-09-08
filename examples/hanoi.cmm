@@ -14,8 +14,8 @@ step = 0
             --n; t = 3 - f - t; r = 0;
         }
         n > 0 && r == 1 ?:#$;
-        ++step; _p("Step", step, ":");
-        _p("Move disk", n, "from", f, "to", t); _pln();
+        ++step;
+        _pln("Step ", step, ": Move disk ", n, " from ", f, " to ", t);
         fstk[p] = f; tstk[p] = t; rstk[p] = 2; ++p;
         --n; f = 3 - f - t; r = 0;
     }

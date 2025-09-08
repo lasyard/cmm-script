@@ -5,25 +5,28 @@
 
 using namespace std;
 
-void f__p([[maybe_unused]] void *context, [[maybe_unused]] Operand &r, deque<Operand> &p)
+void f_p([[maybe_unused]] void *context, Operand &r, deque<Operand> &p)
 {
     deque<Operand>::const_iterator i;
+    int count = 0;
     for (i = p.begin(); i != p.end(); ++i) {
-        cout << *i << " ";
+        cout << *i;
+        ++count;
     }
+    r = count;
 }
 
-void f__pw([[maybe_unused]] void *context, [[maybe_unused]] Operand &r, deque<Operand> &p)
+void f_pln(void *context, Operand &r, deque<Operand> &p)
+{
+    f_p(context, r, p);
+    cout << endl;
+}
+
+void f_pw([[maybe_unused]] void *context, [[maybe_unused]] Operand &r, deque<Operand> &p)
 {
     deque<Operand>::const_iterator i;
     int w = p.front();
     p.pop_front();
-    for (i = p.begin(); i != p.end(); ++i) {
-        cout << setw(w) << *i;
-    }
-}
-
-void f__pln([[maybe_unused]] void *context, [[maybe_unused]] Operand &r, [[maybe_unused]] deque<Operand> &p)
-{
-    cout << endl;
+    cout << setw(w);
+    f_p(context, r, p);
 }

@@ -20,6 +20,11 @@ public:
         return ids[name];
     }
 
+    void registerFun(const string &name, FunType *pFun)
+    {
+        funs[name] = pFun;
+    }
+
     void exec(const char *src);
     void printIds();
     void printFuns();
@@ -34,13 +39,7 @@ private:
         void (Script::*proc)();
     };
 
-    struct FunMap {
-        const char *name;
-        FunType *pFun;
-    };
-
     static const struct SigilProcMap sigilTable[];
-    static const struct FunMap funTable[];
 
     const char *pc;
     enum ExeState state;
@@ -56,13 +55,13 @@ private:
     int parseBinInt();
     int parseDecInt();
     void parseConst();
-    void parseName();
+    void parseId();
     void parseSigil();
 
     bool stateOperand();
 
     void proc_int(int v);
-    void proc_name(const string &name);
+    void proc_id(const string &name);
     void proc_sigil();
     void proc_end();
     void proc_str(const string &str);
@@ -113,7 +112,6 @@ private:
 
     void bypassBranch();
     void exitLoop();
-    void addFuns();
 };
 
 #endif /* _CMM_SCRIPT_H_ */

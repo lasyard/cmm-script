@@ -1,5 +1,7 @@
 #include "script.h"
 
+#include "char_utils.h"
+
 const struct Script::SigilProcMap Script::sigilTable[] = {
     {0, 1, 29, 0}, // Root (0)
     {'=', 29, 30, &Script::proc_op2<ASSIGN>}, // Level 1 (1)
@@ -56,53 +58,12 @@ const struct Script::SigilProcMap Script::sigilTable[] = {
     {'=', 0, 0, &Script::proc_op2<ORAS>},
 };
 
-static bool isLineEnd(int c)
-{
-    return c == '\r' || c == '\n';
-}
-
-static bool isSpace(int c)
-{
-    return c == ' ' || c == '\t';
-}
-
-static bool isNum(int c)
-{
-
-    return '0' <= c && c <= '9';
-}
-
-static bool isHexNum(int c)
-{
-    return ('a' <= c && c <= 'f') || ('A' <= c && c <= 'F');
-}
-
-static bool isAlpha(int c)
-{
-    return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z');
-}
-
-static bool isNameInit(int c)
-{
-    return isAlpha(c) || c == '_' || c == '@' || c == '\\';
-}
-
-static bool isName(int c)
-{
-    return isNameInit(c) || isNum(c);
-}
-
-const struct Script::FunMap Script::funTable[] = {
-    {  "_p",   f__p},
-    { "_pw",  f__pw},
-    {"_pln", f__pln},
-};
-
 Script::Script()
 {
-    addFuns();
-    exp.bind(this);
     reset();
+    registerFun("_p", f_p);
+    registerFun("_pln", f_pln);
+    registerFun("_pw", f_pw);
 }
 
 Script::~Script()
@@ -117,15 +78,15 @@ void Script::exec(const char *src)
             if (pc[0] == '\0') {
                 break;
             }
-            if (isLineEnd(pc[0])) {
+            if (is_line_end(pc[0])) {
                 proc_end();
                 pc++;
-            } else if (isSpace(pc[0])) {
+            } else if (is_space(pc[0])) {
                 pc++;
-            } else if (isNum(pc[0])) {
+            } else if (is_digit(pc[0])) {
                 parseConst();
-            } else if (isNameInit(pc[0])) {
-                parseName();
+            } else if (is_id_init(pc[0])) {
+                parseId();
             } else {
                 parseSigil();
             }
@@ -177,11 +138,11 @@ int Script::parseHexInt()
     int value = 0;
     bool ok = false;
     while (true) {
-        if (isNum(pc[0])) {
+        if (is_digit(pc[0])) {
             value <<= 4;
             value += pc[0] & 0x0F;
             ok = true;
-        } else if (isHexNum(pc[0])) {
+        } else if (is_hex(pc[0])) {
             value <<= 4;
             value += (pc[0] & 0x0F) + 9;
             ok = true;
@@ -222,7 +183,7 @@ int Script::parseDecInt()
 {
     int value = 0;
     while (true) {
-        if (isNum(pc[0])) {
+        if (is_digit(pc[0])) {
             value *= 10;
             value += pc[0] & 0x0F;
         } else {
@@ -246,13 +207,13 @@ void Script::parseConst()
     }
 }
 
-void Script::parseName()
+void Script::parseId()
 {
-    const char *name = pc;
-    while (isName(pc[0])) {
+    const char *id = pc;
+    while (is_id_body(pc[0])) {
         pc++;
     }
-    proc_name(string(name, pc - name));
+    proc_id(string(id, pc - id));
 }
 
 void Script::parseSigil()
@@ -291,7 +252,7 @@ void Script::proc_int(int v)
     state = AFT_OPERAND;
 }
 
-void Script::proc_name(const string &name)
+void Script::proc_id(const string &name)
 {
     if (state == AFT_DOT) {
         exp.pushOp(LBRK);
@@ -303,8 +264,9 @@ void Script::proc_name(const string &name)
             exp.pushFun(funs[name]);
             state = AFT_FUN;
         } else {
-            if (!ids.exists(name))
+            if (!ids.exists(name)) {
                 ids[name] = Data();
+            }
             exp.push(&ids[name]);
             state = AFT_OPERAND;
         }
@@ -481,12 +443,4 @@ void Script::exitLoop()
         throw ERR_BAD_LOOP;
     }
     pc++;
-}
-
-void Script::addFuns()
-{
-    unsigned int i;
-    for (i = 0; i < sizeof(funTable) / sizeof(struct FunMap); i++) {
-        funs[funTable[i].name] = funTable[i].pFun;
-    }
 }

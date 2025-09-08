@@ -13,8 +13,8 @@ typedef void FunType(
     deque<Operand> &p // parameters
 );
 
-void f__p(void *context, Operand &r, deque<Operand> &p);
-void f__pw(void *context, Operand &r, deque<Operand> &p);
-void f__pln(void *context, Operand &r, deque<Operand> &p);
+void f_p(void *context, Operand &r, deque<Operand> &p);
+void f_pln(void *context, Operand &r, deque<Operand> &p);
+void f_pw(void *context, Operand &r, deque<Operand> &p);
 
 #endif /* _CMM_FUNS_H_ */

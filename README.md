@@ -85,9 +85,9 @@ _pw(3, a, a+b, (a+b)*c)
 
 Currently the built-in functions are:
 
-* `_p()`: to output the parameters
-* `_pln()`: to output a line break
-* `_pw()`: to output the parameters except the first one. the first parameter is used to set the output width
+* `p()`: to output the parameters
+* `pln()`: to output the parameters with a line break
+* `pw()`: to output the parameters except the first one. the first parameter is used to set the output width
 
 ## Command Line
 

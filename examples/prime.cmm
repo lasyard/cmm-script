@@ -12,8 +12,8 @@ cn = 2 {
     }
 ++cn; cn < n/2 ?:#$ }
 
-_p("Prime numbers within ", n, ":"); _pln()
+_pln("Prime numbers within ", n, ":")
 i = 2 { i < n ?:#$
-    num[i] == 0 ? _p(i) $
+    num[i] == 0 ? _p(i, " ") $
 ++i }
 _pln()
