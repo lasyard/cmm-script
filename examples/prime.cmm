@@ -1,0 +1,19 @@
+/* 素数 */
+
+n ?: n = 100 $
+
+num = @
+
+cn = 2 {
+    { num[cn] != 0 ?:#$ ++cn }
+    i = cn*2 { i < n ?:#$
+        num[i] = 1
+        i += cn
+    }
+++cn; cn < n/2 ?:#$ }
+
+_pln("Prime numbers within ", n, ":")
+i = 2 { i < n ?:#$
+    num[i] == 0 ? _p(i, " ") $
+++i }
+_pln()

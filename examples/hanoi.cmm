@@ -1,0 +1,23 @@
+/* 汉诺塔 */
+
+n ?: n = 5 $
+
+fstk = tstk = rstk = @
+p = 0; f = 0; t = 1; r = 0
+step = 0
+
+{
+    {
+        {
+            n > 0 && r == 0 ?:#$;
+            fstk[p] = f; tstk[p] = t; rstk[p] = 1; ++p;
+            --n; t = 3 - f - t; r = 0;
+        }
+        n > 0 && r == 1 ?:#$;
+        ++step;
+        _pln("Step ", step, ": Move disk ", n, " from ", f, " to ", t);
+        fstk[p] = f; tstk[p] = t; rstk[p] = 2; ++p;
+        --n; f = 3 - f - t; r = 0;
+    }
+    --p; p >= 0 ?:#$ f = fstk[p]; t = tstk[p]; r = rstk[p]; ++n;
+}

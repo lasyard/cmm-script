@@ -1,0 +1,42 @@
+name: make
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.h"
+      - "**/*.c"
+      - "**/*.cpp"
+      - ".github/workflows/make.yml"
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@main
+        with:
+          submodules: recursive
+
+      - name: Build
+        working-directory: ${{github.workspace}}
+        # Build your program with the given configuration
+        run: make
+
+      - name: Run Examples
+        working-directory: ${{github.workspace}}
+        run: |
+          ./cmm examples/hanoi
+          ./cmm examples/magic
+          ./cmm examples/mul_table
+          ./cmm examples/nine_circle
+          ./cmm examples/prime

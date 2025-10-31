@@ -1,0 +1,6 @@
+[submodule "doctest"]
+	path = doctest
+	url = git@github.com:onqtam/doctest.git
+[submodule "cmake-common"]
+	path = cmake-common
+	url = git@github.com:lasyard/cmake-common.git

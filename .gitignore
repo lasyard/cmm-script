@@ -1,0 +1,19 @@
+.*
+!.gitignore
+!.gitmodules
+!.clangd
+!.editorconfig
+
+# C/C++ files
+*.o
+*.out
+cmm
+
+# CLang files
+!.clang-format
+
+# VSCode files
+!.vscode/
+
+# GitHub files
+!.github/
