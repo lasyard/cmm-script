@@ -99,4 +99,4 @@ In the command line interface, you can type in any codes, which are executed whe
 
 ## MIT License
 
-<http://lasy.fwh.is/mit_license>.
+<https://lasy.fwh.is/mit_license>.
